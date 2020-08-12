@@ -45,7 +45,6 @@ class UpdateSubscriptionRequest(BaseRequest):
             self._request_body.update({
                 'subscription': {
                     'subject': self._new_subscription_subject,
-                    'message': self.new_subscription_message,
                     'schedule': {'id': self._new_schedule_id}
                 }
             })
@@ -53,7 +52,6 @@ class UpdateSubscriptionRequest(BaseRequest):
             self._request_body.update({
                 'subscription': {
                     'subject': self._new_subscription_subject,
-                    'message': self.new_subscription_message,
                 }
             })
         else:

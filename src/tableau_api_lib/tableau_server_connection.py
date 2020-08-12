@@ -2609,7 +2609,7 @@ class TableauServerConnection:
     def update_subscription(self,
                             subscription_id,
                             new_subscription_subject=None,
-                            new subscription_message=None,
+                            new_subscription_message=None,
                             new_schedule_id=None):
         """
         Updates details for the specified subscription.
@@ -2621,7 +2621,7 @@ class TableauServerConnection:
         """
         self.active_request = UpdateSubscriptionRequest(ts_connection=self,
                                                         new_schedule_id=new_schedule_id,
-                                                        new_subscription_subject=new_subscription_subject).get_request(),
+                                                        new_subscription_subject=new_subscription_subject,
                                                         new_subscription_message=new_subscription_message).get_request()
         self.active_endpoint = SubscriptionsEndpoint(ts_connection=self,
                                                      subscription_id=subscription_id,
