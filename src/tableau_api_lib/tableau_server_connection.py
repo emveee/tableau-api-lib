@@ -2543,6 +2543,7 @@ class TableauServerConnection:
     @verify_api_method_exists('2.3')
     def create_subscription(self,
                             subscription_subject,
+                            subscription_message,
                             content_type,
                             content_id,
                             schedule_id,
@@ -2552,6 +2553,7 @@ class TableauServerConnection:
         """
         Creates a new subscription for the specified user to receive the specified content on the specified schedule.
         :param string subscription_subject: the subject for the new subscription.
+        :param string subscription_message: the message for the new subscription.
         :param string content_type: the content type for the new subscription [Workbook or View]
         :param string content_id: the content ID [workbook ID or view ID]
         :param string schedule_id: the schedule ID the subscription will be executed on
@@ -2562,6 +2564,7 @@ class TableauServerConnection:
         """
         self.active_request = CreateSubscriptionRequest(ts_connection=self,
                                                         subscription_subject=subscription_subject,
+                                                        subscription_message=subscription_message,
                                                         content_type=content_type,
                                                         content_id=content_id,
                                                         schedule_id=schedule_id,
@@ -2606,17 +2609,20 @@ class TableauServerConnection:
     def update_subscription(self,
                             subscription_id,
                             new_subscription_subject=None,
+                            new subscription_message=None,
                             new_schedule_id=None):
         """
         Updates details for the specified subscription.
         :param string subscription_id: the subscription ID
         :param string new_subscription_subject: (optional) the new subscription subject
+        :param string new_subscription_message: (optional) the new subscription message
         :param string new_schedule_id: (optional) the new schedule ID for the subscription
         :return: HTTP response
         """
         self.active_request = UpdateSubscriptionRequest(ts_connection=self,
                                                         new_schedule_id=new_schedule_id,
-                                                        new_subscription_subject=new_subscription_subject).get_request()
+                                                        new_subscription_subject=new_subscription_subject).get_request(),
+                                                        new_subscription_message=new_subscription_message).get_request()
         self.active_endpoint = SubscriptionsEndpoint(ts_connection=self,
                                                      subscription_id=subscription_id,
                                                      update_subscription=True).get_endpoint()
