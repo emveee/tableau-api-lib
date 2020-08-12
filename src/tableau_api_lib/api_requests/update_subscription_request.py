@@ -6,6 +6,7 @@ class UpdateSubscriptionRequest(BaseRequest):
     Builds the request body for Tableau Server REST API requests updating subscriptions.
     :param class ts_connection: the Tableau Server connection object
     :param str new_subscription_subject: (optional) a new subject for the subscription
+    :param str new_subscription_message: (optional) a new message for the subscription
     :param str new_schedule_id: (optional) the ID of a schedule to associate this subscription with
     :param bool attach_image_flag: True if attaching a .png image to the subscription, defaults to False
     :param bool attach_pdf_flag: True if attaching a .pdf file to the subscription, defaults to False
@@ -13,12 +14,14 @@ class UpdateSubscriptionRequest(BaseRequest):
     def __init__(self,
                  ts_connection,
                  new_subscription_subject=None,
+                 new_subscription_message=None,
                  new_schedule_id=None,
                  attach_image_flag=None,
                  attach_pdf_flag=None):
 
         super().__init__(ts_connection)
         self._new_subscription_subject = new_subscription_subject
+        self._new_subscription_subject = new_subscription_message
         self._new_schedule_id = new_schedule_id
         self._attach_image_flag = attach_image_flag
         self._attach_pdf_flag = attach_pdf_flag
@@ -42,13 +45,15 @@ class UpdateSubscriptionRequest(BaseRequest):
             self._request_body.update({
                 'subscription': {
                     'subject': self._new_subscription_subject,
+                    'message': self.new_subscription_message,
                     'schedule': {'id': self._new_schedule_id}
                 }
             })
         elif self._new_subscription_subject and not self._new_schedule_id:
             self._request_body.update({
                 'subscription': {
-                    'subject': self._new_subscription_subject
+                    'subject': self._new_subscription_subject,
+                    'message': self.new_subscription_message,
                 }
             })
         else:
