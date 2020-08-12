@@ -6,6 +6,7 @@ class CreateSubscriptionRequest(BaseRequest):
     Builds the request body for Tableau Server REST API requests creating subscriptions.
     :param class ts_connection: the Tableau Server connection object
     :param str subscription_subject: the subject to display to users receiving the subscription
+    :param str subscription_message: the message to display to users receiving the subscription
     :param str content_type: set this value to 'Workbook' if the subscription is for a workbook; set this value to
     'View' if the subscription is for a view
     :param str content_id: the ID of the workbook or view the subscription is sourced from.
@@ -18,6 +19,7 @@ class CreateSubscriptionRequest(BaseRequest):
     def __init__(self,
                  ts_connection,
                  subscription_subject,
+                 subscription_message,
                  content_type,
                  content_id,
                  schedule_id,
@@ -27,6 +29,7 @@ class CreateSubscriptionRequest(BaseRequest):
 
         super().__init__(ts_connection)
         self._subscription_subject = subscription_subject
+        self._subscription_message = subscription_message
         self._content_type = content_type.lower()
         self._content_id = content_id
         self._schedule_id = schedule_id
@@ -67,6 +70,7 @@ class CreateSubscriptionRequest(BaseRequest):
         self._request_body.update({
             'subscription': {
                 'subject': self._subscription_subject,
+                'message': self._subscription_message,
                 'content': {
                     'type': self._content_type,
                     'id': self._content_id
