@@ -10,7 +10,9 @@ TEST_WORKBOOK_FILE_PATH = r'C:\Users\estam\Documents\Development\python-tableau-
 TEST_WORKBOOK_PREFIX = 'test_wb_'
 TEST_SCHEDULE_NAME = 'temp_test_schedule'
 TEST_SUBSCRIPTION_SUBJECT = 'temp_test_subscription_subject'
+TEST_SUBSCRIPTION_MESSAGE = 'temp_test_subscription_message'
 TEST_UPDATED_SUBSCRIPTION_SUBJECT = 'temp_test_updated_subscription_subject'
+TEST_UPDATED_SUBSCRIPTION_MESSAGE = 'temp_test_updated_subscription_message'
 TEST_PROJECT_NAME = 'Test'
 
 
@@ -101,6 +103,7 @@ def test_create_subscription():
     time.sleep(3)
     print(conn.query_workbooks_for_site().json())
     response = conn.create_subscription(subscription_subject=TEST_SUBSCRIPTION_SUBJECT,
+                                        subscription_message=TEST_SUBSCRIPTION_MESSAGE,
                                         content_type='workbook',
                                         content_id=get_test_workbook_id(conn),
                                         schedule_id=get_test_schedule_id(conn),
@@ -122,6 +125,7 @@ def test_query_subscription():
 def test_update_subscription():
     response = conn.update_subscription(subscription_id=get_test_subscription_id(conn),
                                         new_subscription_subject='temp_test_updated_subscription_subject',
+                                        new_subscription_message='temp_test_updated_subscription_message',
                                         new_schedule_id=get_test_schedule_id(conn))
     assert response.status_code == 200
 
